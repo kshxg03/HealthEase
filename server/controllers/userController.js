@@ -1,6 +1,14 @@
 const JWT = require('jsonwebtoken');
 const { hashPassword, comparePassword } = require('../helpers/authHelper');
 const userModel = require('../models/userModel');
+var { expressjwt: jwt } = require("express-jwt")
+
+
+//middleware
+const requiredSignIn = jwt({
+    secret: process.env.JWT_SECRET,
+    algorithms: ["HS256"]
+})
 
 //register
 const registerController = async (req, res) => {
@@ -107,5 +115,43 @@ const loginController = async (req, res) => {
     }
 }
 
+//update user
+const updateUserController = async (req, res) => {
+    try {
+        const { name, email, password } = req.body
+        //find user
+        const user = await userModel.findOne({ email })
+        //password validate
+        if (password && password.length < 6) {
+            return res.status(400).send({
+                success: false,
+                message: 'Password is required and should be at least 6 characters long'
+            })
+        }
+        const hashedPassword = password ? await hashPassword(password) : undefined
+        //updated user
+        const updatedUser = await userModel.findOneAndUpdate({ email }, {
+            name: name || user.name,
+            password: hashedPassword || user.password,
+        }, { new: true })
+        //hide password
+        updatedUser.password = undefined;
+        res.status(200).send({
+            success: true,
+            message: "Profile updated, please login",
+            updatedUser
+        })
 
-module.exports = { registerController, loginController };
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: 'Error in user update api'.
+                error
+        })
+
+    }
+}
+
+
+module.exports = { registerController, loginController, updateUserController, requiredSignIn };
