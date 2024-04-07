@@ -11,6 +11,8 @@ import News from '../../screens/News';
 import Medication from '../../screens/Medication'
 import Meditation from '../../screens/Meditation'
 import Profile from '../../screens/Profile';
+import BMI from '../../screens/BMI';
+import HealthRecords from '../../screens/HealthRecords';
 
 const ScreenMenu = () => {
     //global state
@@ -41,7 +43,8 @@ const ScreenMenu = () => {
                         name="Diagnostics"
                         component={Diagnostics}
                         options={{
-                            headerBackVisible: false,
+                            headerBackVisible: true,
+                            headerBackTitleVisible: false,
                             headerRight: () => <HeaderMenu />
                         }}
                     />
@@ -49,7 +52,8 @@ const ScreenMenu = () => {
                         name="News"
                         component={News}
                         options={{
-                            headerBackVisible: false,
+                            headerBackVisible: true,
+                            headerBackTitleVisible: false,
                             headerRight: () => <HeaderMenu />
                         }}
                     />
@@ -57,7 +61,8 @@ const ScreenMenu = () => {
                         name="Profile"
                         component={Profile}
                         options={{
-                            headerBackVisible: false,
+                            headerBackVisible: true,
+                            headerBackTitleVisible: false,
                             headerRight: () => <HeaderMenu />
                         }}
                     />
@@ -66,6 +71,7 @@ const ScreenMenu = () => {
                         component={Medication}
                         options={{
                             headerBackVisible: true,
+                            headerBackTitleVisible: false,
                             headerRight: () => <HeaderMenu />
                         }}
                     />
@@ -74,6 +80,25 @@ const ScreenMenu = () => {
                         component={Meditation}
                         options={{
                             headerBackVisible: true,
+                            headerBackTitleVisible: false,
+                            headerRight: () => <HeaderMenu />
+                        }}
+                    />
+                    <Stack.Screen
+                        name="HealthRecords"
+                        component={HealthRecords}
+                        options={{
+                            headerBackVisible: true,
+                            headerBackTitleVisible: false,
+                            headerRight: () => <HeaderMenu />
+                        }}
+                    />
+                    <Stack.Screen
+                        name="BMI"
+                        component={BMI}
+                        options={{
+                            headerBackVisible: true,
+                            headerBackTitleVisible: false,
                             headerRight: () => <HeaderMenu />
                         }}
                     />

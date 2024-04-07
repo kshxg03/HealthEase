@@ -13,7 +13,8 @@ const Profile = () => {
     const { user, token } = state;
 
     // Local state
-    const [name, setName] = useState(user?.name);
+    const [firstname, setFirstName] = useState(user?.firstname);
+    const [lastname, setLastName] = useState(user?.lastname);
     const [password, setPassword] = useState(user?.password);
     const [email] = useState(user?.email);
     const [loading, setLoading] = useState(false);
@@ -22,7 +23,8 @@ const Profile = () => {
         try {
             setLoading(true);
             const { data } = await axios.put('/auth/update-user', {
-                name,
+                firstname,
+                lastname,
                 password,
                 email
             });
@@ -55,16 +57,24 @@ const Profile = () => {
                     />
                 </View>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.inputLabel}>Name</Text>
+                    <Text style={styles.inputLabel}>First-Name</Text>
                     <TextInput
                         style={styles.input}
-                        value={name}
-                        onChangeText={(text) => setName(text)}
+                        value={firstname}
+                        onChangeText={(text) => setFirstName(text)}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                <Text style={styles.inputLabel}>Last-Name</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={lastname}
+                        onChangeText={(text) => setLastName(text)}
                     />
                 </View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.inputLabel}>Email</Text>
-                    <Text style={styles.inputLabel}>{email}</Text>
+                    <Text>{email}</Text>
                 </View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.inputLabel}>Password</Text>
@@ -112,7 +122,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     inputLabel: {
-        width: 80,
+        width: 90,
         fontWeight: 'bold',
         color: '#333',
     },

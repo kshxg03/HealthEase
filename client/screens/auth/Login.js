@@ -11,13 +11,22 @@ const Login = ({ navigation }) => {
     //global state
     const [state, setState] = useContext(AuthContext)
 
-
     // states
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
-    //functions
-    //button
+
+    // function to get local storage data
+    const getLocalStorageData = async () => {
+        try {
+            let data = await AsyncStorage.getItem('@auth');
+            console.log("Local Storage data ==> ", data);
+        } catch (error) {
+            console.error("Error while getting local storage data: ", error);
+        }
+    };
+
+    // button submit function
     const handleSubmit = async () => {
         try {
             setLoading(true);
@@ -26,25 +35,20 @@ const Login = ({ navigation }) => {
                 setLoading(false);
                 return;
             }
-            setLoading(false);
             const { data } = await axios.post('/auth/login', { email, password });
-            setState(data)
+            setState(data);
             await AsyncStorage.setItem('@auth', JSON.stringify(data));
-            alert(data && data.message)
-            navigation.navigate('Home')
-            console.log("Login data==> ", { email, password });
+            alert(data && data.message);
+            navigation.navigate('Home');
         } catch (error) {
             alert(error.response.data.message);
             setLoading(false);
-            console.log(error);
+            console.error("Error in login: ", error);
         }
-        //localstorage temp function
-        const getLocalStorageData = async () => {
-            let data = await AsyncStorage.getItem('@auth');
-            console.log("Local Storage data ==> ", data);
-        };
+        // call function to get local storage data after handling submit
         getLocalStorageData();
     };
+
     return (
         <View style={styles.container}>
             <View style={styles.TitleView}>
@@ -76,7 +80,7 @@ const Login = ({ navigation }) => {
             </View>
 
             <Text style={styles.linkText}>
-                Dont have an account?{" "}
+                Don't have an account?{" "}
                 <Text style={styles.link}
                     onPress={() => navigation.navigate('Register')}>
                     Signup
@@ -127,4 +131,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Login
+export default Login;

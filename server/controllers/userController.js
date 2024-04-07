@@ -13,12 +13,18 @@ const requiredSignIn = jwt({
 //register
 const registerController = async (req, res) => {
     try {
-        const { name, email, password } = req.body
+        const { firstname, lastname, email, password } = req.body
         //validation
-        if (!name) {
+        if (!firstname) {
             return res.status(400).send({
                 success: false,
-                message: 'name is required'
+                message: 'firstname is required'
+            })
+        }
+        if (!lastname) {
+            return res.status(400).send({
+                success: false,
+                message: 'lastname is required'
             })
         }
         if (!email) {
@@ -46,7 +52,7 @@ const registerController = async (req, res) => {
         const hashedPassword = await hashPassword(password)
 
         //save
-        const user = await userModel({ name, email, password: hashedPassword }).save()
+        const user = await userModel({ firstname, lastname, email, password: hashedPassword }).save()
 
         res.status(201).send({
             success: true,
@@ -92,7 +98,7 @@ const loginController = async (req, res) => {
         }
         //jwt
         const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: '7d',
+            expiresIn: '30d',
         })
 
         //hide password
@@ -118,7 +124,7 @@ const loginController = async (req, res) => {
 //update user
 const updateUserController = async (req, res) => {
     try {
-        const { name, email, password } = req.body
+        const { firstname, lastname, email, password } = req.body
         //find user
         const user = await userModel.findOne({ email })
         //password validate
@@ -131,7 +137,8 @@ const updateUserController = async (req, res) => {
         const hashedPassword = password ? await hashPassword(password) : undefined
         //updated user
         const updatedUser = await userModel.findOneAndUpdate({ email }, {
-            name: name || user.name,
+            firstname: firstname || user.firstname,
+            lastname: lastname || user.lastname,
             password: hashedPassword || user.password,
         }, { new: true })
         //hide password
