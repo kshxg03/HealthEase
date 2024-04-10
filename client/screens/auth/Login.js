@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        backgroundColor: "#ffffff",
         gap: 40,
     },
     pageTitle: {
@@ -106,23 +105,24 @@ const styles = StyleSheet.create({
     inputBox: {
         height: 30,
         marginBottom: 20,
-        backgroundColor: "#ffffff",
         marginTop: 10,
         paddingLeft: 10,
     },
     linkText: {
         fontSize: 14,
         textAlign: "center",
+        color: 'white'
     },
     link: {
-        color: "blue",
+        color: "#2ec0f9",
     },
     healthText: {
         fontSize: 30,
+        color: 'white'
     },
     easeText: {
         fontSize: 30,
-        color: "#80ed99", // Adjust color for "Ease"
+        color: "#00f59b", 
     },
     TitleView: {
         flexDirection: 'row',

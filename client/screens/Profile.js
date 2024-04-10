@@ -1,91 +1,59 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { AuthContext } from '../context/authContext';
 import FooterMenu from '../components/Menus/FooterMenu';
-import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const avatar = require('../assets/Avatar.jpg');
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
     // Global state
     const [state, setState] = useContext(AuthContext);
     const { user, token } = state;
 
     // Local state
-    const [firstname, setFirstName] = useState(user?.firstname);
-    const [lastname, setLastName] = useState(user?.lastname);
-    const [password, setPassword] = useState(user?.password);
+    const [firstname] = useState(user?.firstname);
+    const [lastname] = useState(user?.lastname);
     const [email] = useState(user?.email);
-    const [loading, setLoading] = useState(false);
 
-    const handleUpdate = async () => {
-        try {
-            setLoading(true);
-            const { data } = await axios.put('/auth/update-user', {
-                firstname,
-                lastname,
-                password,
-                email
-            });
-            setLoading(false);
-            let updatedUser = data.updatedUser;
-            setState({ ...state, user: updatedUser });
-            alert(data.message);
-        } catch (error) {
-            alert(error.response.data.message);
-            setLoading(false);
-            console.log(error);
-        }
+
+    const goToFeedbackPage = () => {
+        navigation.navigate('Feedback');
     };
 
-    //logout
+    // Logout
     const handleLogout = async () => {
         setState({ token: '', user: null })
         await AsyncStorage.removeItem('@auth')
-        alert('logout successfull')
+        alert('Logout successful')
     }
+
+    // Card component to display user details
+    const UserDetailCard = ({ label, value }) => (
+        <View style={styles.card}>
+            <Text style={styles.cardLabel}>{label}</Text>
+            <Text style={styles.cardValue}>{value}</Text>
+        </View>
+    );
 
     return (
         <View style={styles.container}>
             <ScrollView>
-                <Text style={styles.note}>Note: You can only change your name and password!</Text>
                 <View style={styles.avatarContainer}>
                     <Image
                         source={avatar}
                         style={styles.avatar}
                     />
                 </View>
-                <View style={styles.inputContainer}>
-                    <Text style={styles.inputLabel}>First-Name</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={firstname}
-                        onChangeText={(text) => setFirstName(text)}
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                <Text style={styles.inputLabel}>Last-Name</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={lastname}
-                        onChangeText={(text) => setLastName(text)}
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                    <Text style={styles.inputLabel}>Email</Text>
-                    <Text>{email}</Text>
-                </View>
-                <View style={styles.inputContainer}>
-                    <Text style={styles.inputLabel}>Password</Text>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(text) => setPassword(text)}
-                        secureTextEntry={true}
-                    />
-                </View>
-                <TouchableOpacity style={styles.updateBtn} onPress={handleUpdate}>
-                    <Text style={styles.updateBtnText}>{loading ? "Please wait" : "Update Profile"}</Text>
+                <UserDetailCard label="First Name" value={firstname} />
+                <UserDetailCard label="Last Name" value={lastname} />
+                <UserDetailCard label="Email" value={email} />
+                <TouchableOpacity style={styles.updateBtn} onPress={() => navigation.navigate('EditProfile')}>
+                    <Text style={styles.updateBtnText}>Edit Profile</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.updateBtn} onPress={goToFeedbackPage} >
+                    <Text style={styles.updateBtnText}>Give Feeback/ Report Issues</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
                     <Text style={styles.logoutBtnText}>Logout</Text>
@@ -101,52 +69,43 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 16,
     },
-    note: {
-        marginTop: 20,
-        marginBottom: 30,
-        color: 'red',
-        textAlign: 'center',
-    },
     avatarContainer: {
         alignItems: 'center',
-        marginBottom: 20,
+        marginBottom: 50,
+        marginTop: 50,
     },
     avatar: {
-        height: 150,
-        width: 150,
+        height: 140,
+        width: 140,
         borderRadius: 75,
     },
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
+    card: {
+        backgroundColor: '#323232',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
         marginBottom: 20,
     },
-    inputLabel: {
-        width: 90,
-        fontWeight: 'bold',
-        color: '#333',
+    cardLabel: {
+        fontWeight: '600',
+        marginBottom: 5,
+        color: 'white',
     },
-    input: {
-        borderWidth: 1,
-        borderColor: 'gray',
-        flex: 1,
-        height: 40,
-        backgroundColor: '#f4f4f4',
-        paddingLeft: 10,
+    cardValue: {
+        color: 'white'
     },
     updateBtn: {
-        backgroundColor: '#80ed99',
+        backgroundColor: '#00f59b',
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 10,
+        marginBottom: 20,
     },
     logoutBtn: {
         backgroundColor: '#ff595e',
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
-    },
+    }
 });
 
 export default Profile;

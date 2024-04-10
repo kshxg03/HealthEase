@@ -9,7 +9,7 @@ const CustomPicker = ({ value, options, onSelect }) => {
     <View>
       <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.pickerContainer}>
         <Text style={styles.pickerText}>{value}</Text>
-        <FontAwesome5 name="chevron-down" size={18} color="#666" style={styles.pickerIcon} />
+        <FontAwesome5 name="chevron-down" size={18} color="white" style={styles.pickerIcon} />
       </TouchableOpacity>
       <Modal
         visible={modalVisible}
@@ -46,17 +46,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
+    borderColor: "gray",
     paddingHorizontal: 15,
     paddingVertical: 10,
+    marginBottom: 10,
   },
   pickerText: {
     flex: 1,
     fontSize: 16,
+    color: 'white'
   },
   pickerIcon: {
     marginLeft: 10,
+
   },
   modalContainer: {
     flex: 1,

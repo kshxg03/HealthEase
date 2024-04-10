@@ -4,7 +4,7 @@ import React from 'react'
 const InputBox = ({ inputTitle, keyboardType, autoComplete, secureTextEntry = false, value, setValue }) => {
     return (
         <View>
-            <Text>{inputTitle}</Text>
+            <Text style={styles.inputTitle}>{inputTitle}</Text>
             <TextInput
                 style={styles.inputBox}
                 autoCorrect={false}
@@ -19,13 +19,18 @@ const InputBox = ({ inputTitle, keyboardType, autoComplete, secureTextEntry = fa
 }
 
 const styles = StyleSheet.create({
+    inputTitle: {
+        color: 'white'
+    },
     inputBox: {
         height: 40,
         marginBottom: 20,
-        backgroundColor: "#fff",
+        backgroundColor: "black",
+        borderColor: 'gray',
         marginTop: 10,
         paddingLeft: 10,
         borderWidth: 1,
+        color: 'white'
     }
 })
 

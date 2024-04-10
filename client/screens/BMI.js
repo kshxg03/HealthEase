@@ -3,7 +3,7 @@ import {
   View,
   Text,
   TextInput,
-  Button,
+  TouchableOpacity,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
@@ -47,7 +47,7 @@ const BMI = () => {
       case 'Overweight':
         return 'red';
       default:
-        return 'black'; // Default color
+        return 'white'; // Default color
     }
   };
 
@@ -58,18 +58,24 @@ const BMI = () => {
         <TextInput
           style={styles.input}
           placeholder="Height in cm"
+          placeholderTextColor={'gray'}
           value={height}
           keyboardType='numeric'
+          keyboardAppearance='dark'
           onChangeText={setHeight}
         />
         <TextInput
           style={styles.input}
           placeholder="Weight in kg"
+          placeholderTextColor={'gray'}
           keyboardType="number-pad"
+          keyboardAppearance='dark'
           value={weight}
           onChangeText={setWeight}
         />
-        <Button title="Calculate BMI" onPress={calculateBMI} />
+        <TouchableOpacity style={styles.button} onPress={calculateBMI}>
+          <Text style={styles.buttonText}>Calculate BMI</Text>
+        </TouchableOpacity>
         {bmi && (
           <>
             <Text style={[styles.result, { color: getTextColor(bmiCategory) }]}>
@@ -95,6 +101,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     margin: 20,
+    color: 'white'
   },
   input: {
     width: '100%',
@@ -102,15 +109,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     marginVertical: 10,
+    color: 'white'
+  },
+  button: {
+    backgroundColor: '#00f59b',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    marginTop: 10,
   },
   result: {
     marginTop: 20,
     fontSize: 18,
+    color: 'white'
   },
   suggestion: {
     marginTop: 10,
     fontSize: 16,
-    color: 'grey',
+    color: 'white',
   },
 });
 

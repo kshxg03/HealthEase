@@ -24,6 +24,7 @@ app.use(morgan('dev'))
 app.use("/api/v1/auth", require("./routes/userRoutes"));
 app.use("/api/v1/medical", require("./routes/diagnosticRoutes"));
 app.use("/api/v1/medication", require("./routes/medicationRoutes"));
+app.use("/api/v1/feedback", require("./routes/feedbackRoute"));
 
 
 

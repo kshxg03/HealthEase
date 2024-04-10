@@ -11,7 +11,7 @@ const SubmitButton = ({ handleSubmit, btnTitle, loading }) => {
 
 const styles = StyleSheet.create({
     submitBtn: {
-        backgroundColor: "#80ed99",
+        backgroundColor: "#00f59b",
         height: 40,
         marginHorizontal: 20,
         justifyContent: "center",
@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     },
     btnText: {
         textAlign: "center",
-        fontSize: 16,
     }
 })
 

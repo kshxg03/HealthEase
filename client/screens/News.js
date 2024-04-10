@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert, Linking } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert, Linking, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import FooterMenu from '../components/Menus/FooterMenu';
 import moment from 'moment';
@@ -10,6 +10,8 @@ const News = () => {
     const [articles, setArticles] = useState([]);
     const [page, setPage] = useState(1);
     const [selectedArticle, setSelectedArticle] = useState(null);
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         const fetchNews = async () => {
@@ -43,6 +45,13 @@ const News = () => {
         return article.title !== "[Removed]" && article.content !== "[Removed]";
     });
 
+    const LoadingIndicator = () => (
+        <View style={styles.loadingContainer}>
+            <ActivityIndicator size="small" color="black" />
+        </View>
+    );
+    
+
     const renderWebView = () => {
         if (!selectedArticle || !selectedArticle.startsWith('http')) {
             return (
@@ -56,16 +65,23 @@ const News = () => {
             <View style={{ flex: 1 }}>
                 <View style={styles.webViewHeader}>
                     <TouchableOpacity onPress={handleBackPress}>
-                        <Ionicons name="arrow-back" size={24} color="black" />
+                        <View style={styles.backButton}>
+                            <Ionicons name="arrow-back" size={24} color="black" />
+                            <Text style={styles.backText}>Back</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
+                {loading && <LoadingIndicator />}
                 <WebView
                     source={{ uri: selectedArticle }}
                     style={{ flex: 1 }}
                     originWhitelist={['*']}
+                    onLoadStart={() => setLoading(true)}
+                    onLoadEnd={() => setLoading(false)}
                     onNavigationStateChange={(event) => {
-                        if (event.url !== selectedArticle) {
-                            Linking.openURL(event.url);
+                        const { url, loading, canGoBack } = event;
+                        if (url !== selectedArticle && !loading && canGoBack) {
+                            Linking.openURL(url);
                         }
                     }}
                 />
@@ -113,15 +129,14 @@ const News = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        margin: 8,
-        marginTop: 40,
+        margin: 10,
+        marginTop: 20,
     },
     scrollContent: {
         paddingBottom: 80,
     },
     card: {
-        backgroundColor: '#fff',
-        borderRadius: 8,
+        backgroundColor: '#323232',
         marginBottom: 16,
         elevation: 2,
         overflow: 'hidden',
@@ -139,10 +154,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 4,
+        color: 'white'
     },
     time: {
         fontSize: 12,
-        color: '#666',
+        color: '#f4f4f4',
     },
     errorContainer: {
         flex: 1,
@@ -166,6 +182,26 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
     },
+    backButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    backText: {
+        color: 'black',
+        marginLeft: 5, 
+    },
+    loadingContainer: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 9999,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)', 
+    }
+    
 });
 
 export default News;

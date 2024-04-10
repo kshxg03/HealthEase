@@ -83,27 +83,30 @@ const MedicationPage = () => {
 
     return (
         <View style={styles.container}>
+            <ScrollView>
             <TextInput
                 style={styles.input}
                 placeholder="Medication Name"
+                placeholderTextColor={'gray'}
                 value={name}
                 onChangeText={setName}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Dosage"
+                placeholderTextColor={'gray'}
                 value={dosage}
                 onChangeText={setDosage}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Reminder Time (HH:MM)"
+                placeholderTextColor={'gray'}
                 value={reminderTime}
                 onChangeText={handleSetReminderTime}
             />
             <Button title="Add Medication" onPress={addMedicationRecord} />
             <Text style={styles.sectionTitle}>Medication Records:</Text>
-            <ScrollView>
                 {medicationRecords.map((record) => (
                     <View style={styles.card} key={record._id}>
                         <View style={styles.medicationInfo}>
@@ -137,15 +140,17 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 10,
         paddingHorizontal: 10,
+        color: 'white'
     },
     sectionTitle: {
+        color: 'white',
         fontSize: 18,
         fontWeight: 'bold',
         marginTop: 20,
         marginBottom: 20,
     },
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: '#323232',
         padding: 10,
         marginBottom: 10,
         elevation: 2,
@@ -156,6 +161,7 @@ const styles = StyleSheet.create({
     cardText: {
         fontSize: 16,
         marginBottom: 5,
+        color: 'white'
     },
     medicationInfo: {
         flex: 1,
@@ -164,8 +170,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
     },
-
-
     actionButton: {
         padding: 8,
         borderRadius: 5,

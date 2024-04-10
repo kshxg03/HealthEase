@@ -6,27 +6,32 @@ import {
   Button,
   Alert,
   StyleSheet,
+  Keyboard,
   ScrollView,
   TouchableOpacity,
-  TouchableWithoutFeedback,
-  Keyboard,
+  TouchableWithoutFeedback
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import CustomPicker from "../components/CustomPicker"; // Import the CustomPicker component
-import FooterMenu from "../components/Menus/FooterMenu";
-import moment from "moment";
 import axios from "axios";
+import moment from "moment";
+import CustomPicker from "../components/CustomPicker";
+import FooterMenu from "../components/Menus/FooterMenu";
 
 const MedicalRecordsApp = () => {
   const [records, setRecords] = useState([]);
   const [newRecordValue, setNewRecordValue] = useState("");
   const [newRecordType, setNewRecordType] = useState("Blood Pressure");
-  const [newRecordUnit, setNewRecordUnit] = useState("mmHg"); // Default unit
+  const [newRecordUnit, setNewRecordUnit] = useState("mmHg");
 
   const unitMapping = {
     "Blood Pressure": "mmHg",
     Glucose: "mg/dL",
     Cholesterol: "mg/dL",
+  };
+
+  const normalRanges = {
+    "Blood Pressure": { low: 90, high: 120 },
+    Glucose: { low: 70, high: 100 },
+    Cholesterol: { low: 125, high: 200 },
   };
 
   useEffect(() => {
@@ -74,9 +79,7 @@ const MedicalRecordsApp = () => {
       const response = await axios.delete(`/medical/delete-diagnostic/${id}`);
 
       if (response.data.message === "Record deleted successfully") {
-        setRecords((prevRecords) =>
-          prevRecords.filter((record) => record._id !== id)
-        );
+        setRecords(records.filter((record) => record._id !== id));
         Alert.alert("Success", "Medical record deleted successfully!");
       } else {
         Alert.alert("Error", "Failed to delete medical record.");
@@ -87,58 +90,83 @@ const MedicalRecordsApp = () => {
     }
   };
 
+  const confirmDeleteRecord = (id) => {
+    Alert.alert(
+      "Confirm Delete",
+      "Are you sure you want to delete this record?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Delete",
+          onPress: () => deleteRecord(id) // Call deleteRecord if confirmed
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
   const handlePickerChange = (itemValue) => {
     setNewRecordType(itemValue);
-    setNewRecordUnit(unitMapping[itemValue]);
+    setNewRecordUnit(unitMapping[itemValue] || "Unit");
+  };
+
+  const assessRecord = (type, value) => {
+    const range = normalRanges[type];
+    const numValue = parseFloat(value);
+    if (numValue < range.low) return { status: "Low", color: "red" };
+    if (numValue > range.high) return { status: "High", color: "red" };
+    return { status: "Normal", color: "green" };
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          {/* Replace Picker with CustomPicker */}
-          <CustomPicker
-            value={newRecordType}
-            options={["Blood Pressure", "Glucose", "Cholesterol"]}
-            onSelect={handlePickerChange}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="New Record Value"
-            value={newRecordValue}
-            onChangeText={setNewRecordValue}
-            keyboardType="number-pad"
-          />
-          <Button title="Save" onPress={saveData} />
-          <Text style={styles.sectionTitle}>Your Biomarkings:</Text>
-        </View>
-        <ScrollView style={styles.scrollView}>
+    <View style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <ScrollView>
+          <View style={styles.inputContainer}>
+            <CustomPicker
+              value={newRecordType}
+              options={Object.keys(unitMapping)}
+              onSelect={handlePickerChange}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="New Record Value"
+              placeholderTextColor="gray"
+              value={newRecordValue}
+              onChangeText={setNewRecordValue}
+              keyboardType="number-pad"
+            />
+            <Button title="Save" onPress={saveData} />
+            <Text style={styles.sectionTitle}>Your Biomarkings:</Text>
+          </View>
           {records.map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => deleteRecord(item._id)}
-            >
-              <View style={styles.item}>
-                <View style={styles.itemContent}>
-                  <Text>{`${item.type}: ${item.value} ${item.unit}`}</Text>
-                  {item.createdAt && (
-                    <Text style={styles.timeText}>
-                      Added on:{" "}
-                      {moment(item.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
-                    </Text>
-                  )}
-                </View>
-                <View style={styles.deleteButtonContainer}>
-                  <Text style={styles.deleteButton}>Delete</Text>
-                </View>
+            <View key={index} style={styles.item}>
+              <View style={styles.itemContent}>
+                <Text style={styles.itemText}>{`${item.type}: ${item.value} ${item.unit}`}</Text>
+                <Text style={{ ...styles.itemText, ...styles.assessmentText, color: assessRecord(item.type, item.value).color }}>
+                  Status: {assessRecord(item.type, item.value).status}
+                </Text>
+                {item.createdAt && (
+                  <Text style={{ ...styles.itemText, ...styles.timeText }}>
+                    Added on: {moment(item.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
+                  </Text>
+                )}
               </View>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.deleteButtonContainer}
+                onPress={() => confirmDeleteRecord(item._id)} // Call the confirmation function instead
+              >
+                <Text style={styles.deleteButton}>Delete</Text>
+              </TouchableOpacity>
+            </View>
           ))}
         </ScrollView>
-
-        <FooterMenu />
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+      <FooterMenu />
+    </View>
   );
 };
 
@@ -150,24 +178,21 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: 10,
   },
-  picker: {
-    marginBottom: 10,
-  },
   input: {
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+    color: 'white'
   },
   item: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#fafafa",
+    backgroundColor: "#323232",
     padding: 20,
     marginBottom: 10,
-    borderRadius: 5,
   },
   deleteButton: {
     padding: 8,
@@ -175,11 +200,11 @@ const styles = StyleSheet.create({
     backgroundColor: "lightcoral",
   },
   deleteButtonContainer: {
-    marginLeft: 10, // Adjust this value as needed
+    marginLeft: 10,
   },
   timeText: {
     marginTop: 4,
-    color: "gray",
+    color: "#f4f4f4",
     fontSize: 12,
   },
   sectionTitle: {
@@ -187,15 +212,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 20,
     marginBottom: 20,
+    color: 'white'
   },
-  scrollView: {
-    flex: 1,
+  assessmentText: {
+    marginTop: 4,
   },
-  footerMenu: {
-    position: "absolute", // Position it absolutely
-    bottom: 0, // At the bottom
-    left: 0, // Stretching across the screen
-    right: 0,
+  itemText: {
+    color: 'white', 
   },
 });
 

@@ -36,6 +36,7 @@ const Register = ({ navigation }) => {
             setLoading(false);
             const { data } = await axios.post('/auth/register', { firstname, lastname, email, password });
             alert(data && data.message);
+            navigation.navigate('Login');
         } catch (error) {
             alert(error.response.data.message);
             setLoading(false);
@@ -45,7 +46,11 @@ const Register = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.pageTitle}>Register</Text>
+            <View style={styles.TitleView}>
+                <Text style={styles.healthText}>Health</Text>
+                <Text style={styles.easeText}>Ease</Text>
+            </View>
+            <View>
             <View style={{ marginHorizontal: 20 }}>
                 <InputBox inputTitle={'First-Name'} value={firstname} setValue={setFirstName} />
                 <InputBox inputTitle={'Last-Name'} value={lastname} setValue={setLastName} />
@@ -63,16 +68,19 @@ const Register = ({ navigation }) => {
                     value={password}
                     setValue={setPassword}
                 />
-            </View>
-            <SubmitButton
+                </View>
+                <SubmitButton
                 btnTitle={'Register'}
                 loading={loading}
                 handleSubmit={handleSubmit}
-            />
+                />
+                </View>
+            
+
             <Text style={styles.linkText}>
                 Already have an account?{' '}
                 <Text style={styles.link} onPress={() => navigation.navigate('Login')}>
-                    Sign in
+                    Signin
                 </Text>
             </Text>
         </View>
@@ -83,7 +91,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#ffffff',
+        gap: 40,
     },
     pageTitle: {
         fontSize: 40,
@@ -102,9 +110,23 @@ const styles = StyleSheet.create({
     linkText: {
         fontSize: 14,
         textAlign: 'center',
+        color: 'white'
     },
     link: {
-        color: 'blue',
+        color: "#2ec0f9",
+    },
+    healthText: {
+        fontSize: 30,
+        color: 'white'
+    },
+    easeText: {
+        fontSize: 30,
+        color: "#00f59b", 
+    },
+    TitleView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
 
