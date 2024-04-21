@@ -25,6 +25,8 @@ import Level8 from '../../screens/game/Level8';
 import Level9 from '../../screens/game/Level9';
 import Level10 from '../../screens/game/Level10';
 import Feedback from '../../screens/Feedback';
+import PillReminder from '../../screens/PillReminder';
+import RecordDetails from '../../screens/RecordDetails';
 
 const ScreenMenu = () => {
     //global state
@@ -104,6 +106,7 @@ const ScreenMenu = () => {
                         options={{
                             headerBackVisible: true,
                             headerBackTitleVisible: false,
+                            headerTitle: "Add Report",
                         }}
                     />
                     <Stack.Screen
@@ -242,6 +245,25 @@ const ScreenMenu = () => {
                             headerBackVisible: true,
                             headerBackTitleVisible: false,
                             headerTitle: "Feedback",
+                        }}
+                    />
+
+                    <Stack.Screen
+                        name="PillReminder"
+                        component={PillReminder}
+                        options={{
+                            headerBackVisible: true,
+                            headerBackTitleVisible: false,
+                            headerTitle: "Pill Reminder",
+                        }}
+                    />
+                    <Stack.Screen
+                        name="RecordDetails"
+                        component={RecordDetails}
+                        options={{
+                            headerBackVisible: true,
+                            headerBackTitleVisible: false,
+                            headerTitle: "Health Reports",
                         }}
                     />
                 </>

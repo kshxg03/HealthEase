@@ -31,6 +31,7 @@ const Feedback = () => {
           numberOfLines={5}
           value={feedback}
           onChangeText={text => setFeedback(text)}
+          keyboardAppearance='dark'
         />
         <TouchableOpacity style={styles.button} onPress={submitFeedback}>
           <Text style={styles.buttonText}>Submit</Text>

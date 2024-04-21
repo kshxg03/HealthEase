@@ -5,11 +5,13 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "permissions": ["CAMERA_ROLL", "MEDIA_LIBRARY"],
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "permissions": ["notifications"]
     },
     "assetBundlePatterns": [
       "**/*"

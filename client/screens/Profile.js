@@ -5,7 +5,8 @@ import FooterMenu from '../components/Menus/FooterMenu';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const avatar = require('../assets/Avatar.jpg');
+
+const avatar = require('../assets/Avatar6.png');
 
 const Profile = ({ navigation }) => {
     // Global state

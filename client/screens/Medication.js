@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import { scheduleNotificationAsync } from 'expo-notifications';
+
 
 const MedicationPage = () => {
     const [name, setName] = useState('');
     const [dosage, setDosage] = useState('');
     const [medicationRecords, setMedicationRecords] = useState([]);
-    const [reminderTime, setReminderTime] = useState('');
-    const [selectedMedicationId, setSelectedMedicationId] = useState(null);
 
     const addMedicationRecord = async () => {
         try {
             const response = await axios.post('medication/add-medication', {
                 name,
                 dosage,
-                reminderTime: reminderTime ? reminderTime.toString() : null,
             });
             if (response.data) {
                 Alert.alert('Success', 'Medication record added successfully!');
@@ -26,7 +23,6 @@ const MedicationPage = () => {
             Alert.alert('Error', 'Failed to add medication record.');
         }
     };
-
 
     const getMedicationRecords = async () => {
         try {
@@ -39,44 +35,38 @@ const MedicationPage = () => {
     };
 
     const deleteMedicationRecord = async (id) => {
-        try {
-            const response = await axios.delete(`medication/delete-medication/${id}`);
-            if (response.data.message === 'Record deleted successfully') {
-                Alert.alert('Success', 'Medication record deleted successfully!');
-                getMedicationRecords();
-            } else {
+            try {
+                const response = await axios.delete(`medication/delete-medication/${id}`);
+                if (response.data.message === 'Record deleted successfully') {
+                    Alert.alert('Success', 'Medication record deleted successfully!');
+                    getMedicationRecords();
+                } else {
+                    Alert.alert('Error', 'Failed to delete medication record.');
+                }
+            } catch (error) {
+                console.error('Error deleting medication record:', error);
                 Alert.alert('Error', 'Failed to delete medication record.');
             }
-        } catch (error) {
-            console.error('Error deleting medication record:', error);
-            Alert.alert('Error', 'Failed to delete medication record.');
         }
-    };
-
-    const handleSetReminderTime = async (time) => {
-        setReminderTime(time);
-    };
-
-    const scheduleMedicationReminder = async () => {
-        if (!selectedMedicationId || !reminderTime) return;
-
-        const medication = medicationRecords.find(record => record._id === selectedMedicationId);
-        if (!medication) return;
-
-        const trigger = new Date();
-        trigger.setHours(reminderTime.getHours());
-        trigger.setMinutes(reminderTime.getMinutes());
-
-        await scheduleNotificationAsync({
-            content: {
-                title: 'Medication Reminder',
-                body: `It's time to take your ${medication.name} medication!`,
+    
+    const confirmDelete = (id) => {
+        Alert.alert(
+          "Confirm Delete",
+          "Are you sure you want to delete this record?",
+          [
+            {
+              text: "Cancel",
+              style: "cancel"
             },
-            trigger,
-            repeats: true,
-        });
-    };
-
+            {
+              text: "Delete",
+              onPress: () => deleteMedicationRecord(id) 
+            }
+          ],
+          { cancelable: false }
+        );
+      };
+    
     useEffect(() => {
         getMedicationRecords();
     }, []);
@@ -90,6 +80,7 @@ const MedicationPage = () => {
                 placeholderTextColor={'gray'}
                 value={name}
                 onChangeText={setName}
+                keyboardAppearance='dark'
             />
             <TextInput
                 style={styles.input}
@@ -97,13 +88,7 @@ const MedicationPage = () => {
                 placeholderTextColor={'gray'}
                 value={dosage}
                 onChangeText={setDosage}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Reminder Time (HH:MM)"
-                placeholderTextColor={'gray'}
-                value={reminderTime}
-                onChangeText={handleSetReminderTime}
+                keyboardAppearance='dark'
             />
             <Button title="Add Medication" onPress={addMedicationRecord} />
             <Text style={styles.sectionTitle}>Medication Records:</Text>
@@ -114,10 +99,7 @@ const MedicationPage = () => {
                             <Text style={styles.cardText}>{`Dosage: ${record.dosage}`}</Text>
                         </View>
                         <View style={styles.actions}>
-                            <TouchableOpacity onPress={() => setSelectedMedicationId(record._id)}>
-                                <Text style={styles.actionButton}>Set Reminder</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => deleteMedicationRecord(record._id)}>
+                            <TouchableOpacity onPress={() => confirmDelete(record._id)}>
                                 <Text style={[styles.actionButton, styles.deleteButton]}>Delete</Text>
                             </TouchableOpacity>
                         </View>

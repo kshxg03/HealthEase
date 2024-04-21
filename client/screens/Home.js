@@ -52,6 +52,14 @@ const Home = () => {
     navigation.navigate("ChooseLevel");
   };
 
+  const goToPillReminderPage = () => {
+    navigation.navigate("PillReminder");
+  };
+
+  const goToRecordDetails = () => {
+    navigation.navigate("RecordDetails");
+  };
+
   const Card = ({ iconName, buttonText, onPress }) => {
     return (
       <TouchableOpacity
@@ -106,8 +114,21 @@ const Home = () => {
         <View style={styles.cardRow}>
           <Card
             iconName="hospital"
-            buttonText="Health Records"
+            buttonText="Add Report"
             onPress={goToHealthRecordsPage}
+          />
+          <Card
+            iconName="file-document"
+            buttonText="Health Reports"
+            onPress={goToRecordDetails}
+          />
+        </View>
+
+        <View style={styles.cardRow}>
+        <Card
+            iconName="clock"
+            buttonText="Pill Reminder"
+            onPress={goToPillReminderPage}
           />
           <Card
             iconName="scale-bathroom"
@@ -115,14 +136,11 @@ const Home = () => {
             onPress={goToBMIPage}
           />
         </View>
-
-        <View style={styles.cardRow}>
-          <Card
+        <Card
             iconName="gamepad-variant"
             buttonText="Memory Game"
             onPress={goToChooseLevel}
           />
-        </View>
       </ScrollView>
 
       <FooterMenu />

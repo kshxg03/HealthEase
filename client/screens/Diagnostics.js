@@ -138,6 +138,7 @@ const MedicalRecordsApp = () => {
               value={newRecordValue}
               onChangeText={setNewRecordValue}
               keyboardType="number-pad"
+              keyboardAppearance='dark'
             />
             <Button title="Save" onPress={saveData} />
             <Text style={styles.sectionTitle}>Your Biomarkings:</Text>

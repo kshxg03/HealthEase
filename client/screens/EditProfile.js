@@ -5,7 +5,7 @@ import FooterMenu from '../components/Menus/FooterMenu';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const avatar = require('../assets/Avatar.jpg');
+const avatar = require('../assets/Avatar6.png');
 
 const EditProfile = () => {
    // Global state
@@ -75,6 +75,7 @@ const handleLogout = async () => {
                        style={styles.input}
                        value={firstname}
                        onChangeText={(text) => setFirstName(text)}
+                       keyboardAppearance='dark'
                    />
                </View>
                <View style={styles.inputContainer}>
@@ -83,6 +84,7 @@ const handleLogout = async () => {
                        style={styles.input}
                        value={lastname}
                        onChangeText={(text) => setLastName(text)}
+                       keyboardAppearance='dark'
                    />
                </View>
                <View style={styles.inputContainer}>
@@ -97,6 +99,7 @@ const handleLogout = async () => {
                        placeholderTextColor="gray"
                        onChangeText={(text) => setPassword(text)}
                        secureTextEntry={true}
+                       keyboardAppearance='dark'
                        
                    />
                </View>
@@ -121,7 +124,7 @@ const styles = StyleSheet.create({
     },
     avatarContainer: {
         alignItems: 'center',
-        marginBottom: 20,
+        marginBottom: 40,
     },
     avatar: {
         height: 150,
