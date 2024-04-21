@@ -1,10 +1,10 @@
 const HealthRecord = require('../models/healthRecordModel');
 
+//add record controller
 const addRecordController = async (req, res) => {
     try {
         const { name, age, gender, bloodPressure, uricAcid, vitaminD, magnesium, vitaminB12, fastingBloodGlucose, lipidProfile, cbc } = req.body;
 
-        // Save health record data to MongoDB
         const healthRecord = new HealthRecord({
             name,
             age,
@@ -39,7 +39,7 @@ const getRecordController = async (req, res) => {
     }
 };
 
-// Route to delete a medical record
+// delete a medical record controller
 const deleteRecordConroller = async (req, res) => {
     try {
         const record = await HealthRecord.findByIdAndDelete(req.params.id);

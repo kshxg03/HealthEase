@@ -9,7 +9,7 @@ import {
   Keyboard,
   ScrollView,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from "react-native";
 import axios from "axios";
 import moment from "moment";
@@ -97,12 +97,12 @@ const MedicalRecordsApp = () => {
       [
         {
           text: "Cancel",
-          style: "cancel"
+          style: "cancel",
         },
         {
           text: "Delete",
-          onPress: () => deleteRecord(id) // Call deleteRecord if confirmed
-        }
+          onPress: () => deleteRecord(id), // Call deleteRecord if confirmed
+        },
       ],
       { cancelable: false }
     );
@@ -138,7 +138,7 @@ const MedicalRecordsApp = () => {
               value={newRecordValue}
               onChangeText={setNewRecordValue}
               keyboardType="number-pad"
-              keyboardAppearance='dark'
+              keyboardAppearance="dark"
             />
             <Button title="Save" onPress={saveData} />
             <Text style={styles.sectionTitle}>Your Biomarkings:</Text>
@@ -146,19 +146,28 @@ const MedicalRecordsApp = () => {
           {records.map((item, index) => (
             <View key={index} style={styles.item}>
               <View style={styles.itemContent}>
-                <Text style={styles.itemText}>{`${item.type}: ${item.value} ${item.unit}`}</Text>
-                <Text style={{ ...styles.itemText, ...styles.assessmentText, color: assessRecord(item.type, item.value).color }}>
+                <Text
+                  style={styles.itemText}
+                >{`${item.type}: ${item.value} ${item.unit}`}</Text>
+                <Text
+                  style={{
+                    ...styles.itemText,
+                    ...styles.assessmentText,
+                    color: assessRecord(item.type, item.value).color,
+                  }}
+                >
                   Status: {assessRecord(item.type, item.value).status}
                 </Text>
                 {item.createdAt && (
                   <Text style={{ ...styles.itemText, ...styles.timeText }}>
-                    Added on: {moment(item.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
+                    Added on:{" "}
+                    {moment(item.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
                   </Text>
                 )}
               </View>
               <TouchableOpacity
                 style={styles.deleteButtonContainer}
-                onPress={() => confirmDeleteRecord(item._id)} // Call the confirmation function instead
+                onPress={() => confirmDeleteRecord(item._id)} 
               >
                 <Text style={styles.deleteButton}>Delete</Text>
               </TouchableOpacity>
@@ -185,7 +194,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
-    color: 'white'
+    color: "white",
   },
   item: {
     flexDirection: "row",
@@ -213,13 +222,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 20,
     marginBottom: 20,
-    color: 'white'
+    color: "white",
   },
   assessmentText: {
     marginTop: 4,
   },
   itemText: {
-    color: 'white', 
+    color: "white",
   },
 });
 

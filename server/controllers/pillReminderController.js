@@ -3,9 +3,9 @@ const pillReminderModel = require("../models/pillReminderModel")
 const addReminderController = async (req, res) => {
     try {
         const reminder = new pillReminderModel({
-            name: req.body.name, // assuming `name` is the field for pill name
-            time: req.body.time, // assuming `time` is the field for reminder time
-            postedBy: req.auth._id, // Associate reminder with the authenticated user
+            name: req.body.name, 
+            time: req.body.time, 
+            postedBy: req.auth._id, 
         });
         await reminder.save();
         res.status(201).json({ message: 'Reminder added successfully' });

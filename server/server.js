@@ -3,7 +3,7 @@ const cors = require('cors')
 const dotenv = require('dotenv')
 const morgan = require('morgan')
 const connectDB = require("./config/db")
-const path = require('path'); // Import path module
+const path = require('path'); 
 
 
 //dotenv
@@ -20,7 +20,7 @@ app.use(cors())
 app.use(express.json())
 app.use(morgan('dev'))
 
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+// app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 //routes
 app.use("/api/v1/auth", require("./routes/userRoutes"));

@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // Import MaterialIcons
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"; 
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 const FooterMenu = () => {
@@ -28,7 +28,7 @@ const FooterMenu = () => {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Diagnostics")}>
         <MaterialCommunityIcons
-          name="dna" // Using "dna" icon for Diagnostics
+          name="dna" 
           style={[
             styles.iconStyle,
             { color: route.name === "Diagnostics" ? "#80ed99" : "white" },
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   iconStyle: {
     marginBottom: 3,
     alignSelf: "center",
-    fontSize: 24, // Adjust size if needed
+    fontSize: 24, 
   },
   barText: {
     color: "white",

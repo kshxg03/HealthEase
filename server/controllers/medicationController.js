@@ -1,5 +1,6 @@
 const medicationModel = require("../models/medicationModel")
 
+//add
 const addMedicationController = async (req, res) => {
     const record = new medicationModel({
         name: req.body.name,
@@ -25,7 +26,7 @@ const getMedicationRecords = async (req, res) => {
     }
 };
 
-// Route to delete a medical record
+//to delete a medical record
 const deleteMedicationRecord = async (req, res) => {
     try {
         const record = await medicationModel.findByIdAndDelete(req.params.id);

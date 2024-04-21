@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Modal, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 const CustomPicker = ({ value, options, onSelect }) => {
@@ -7,9 +14,17 @@ const CustomPicker = ({ value, options, onSelect }) => {
 
   return (
     <View>
-      <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.pickerContainer}>
+      <TouchableOpacity
+        onPress={() => setModalVisible(true)}
+        style={styles.pickerContainer}
+      >
         <Text style={styles.pickerText}>{value}</Text>
-        <FontAwesome5 name="chevron-down" size={18} color="white" style={styles.pickerIcon} />
+        <FontAwesome5
+          name="chevron-down"
+          size={18}
+          color="white"
+          style={styles.pickerIcon}
+        />
       </TouchableOpacity>
       <Modal
         visible={modalVisible}
@@ -54,11 +69,10 @@ const styles = StyleSheet.create({
   pickerText: {
     flex: 1,
     fontSize: 16,
-    color: 'white'
+    color: "white",
   },
   pickerIcon: {
     marginLeft: 10,
-
   },
   modalContainer: {
     flex: 1,
