@@ -17,6 +17,11 @@ const MedicationPage = () => {
   const [medicationRecords, setMedicationRecords] = useState([]);
 
   const addMedicationRecord = async () => {
+    if (!name.trim() || !dosage.trim()) {
+      Alert.alert("Alert", "Please fill in all fields.");
+      return;
+    }
+
     try {
       const response = await axios.post("medication/add-medication", {
         name,
@@ -24,6 +29,8 @@ const MedicationPage = () => {
       });
       if (response.data) {
         Alert.alert("Success", "Medication record added successfully!");
+        setName("");
+        setDosage("");
         getMedicationRecords();
       }
     } catch (error) {

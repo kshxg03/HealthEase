@@ -86,6 +86,11 @@ const PillReminder = () => {
   };
 
   const addReminder = async () => {
+    if (!pillName.trim() || !reminderTime.trim()) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    
     try {
       const response = await axios.post("reminder/add-reminder", {
         name: pillName,

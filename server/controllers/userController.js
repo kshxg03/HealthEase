@@ -103,7 +103,7 @@ const loginController = async (req, res) => {
         })
 
         //hide password
-        // user.password = undefined;
+        user.password = undefined;
 
         res.status(200).send({
             success: true,

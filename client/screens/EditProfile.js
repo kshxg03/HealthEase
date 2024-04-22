@@ -35,9 +35,7 @@ const EditProfile = () => {
 
     if (
       firstname === user.firstname &&
-      lastname === user.lastname &&
-      password === user.password
-    ) {
+      lastname === user.lastname ) {
       alert("No new changes to update.");
       return;
     }

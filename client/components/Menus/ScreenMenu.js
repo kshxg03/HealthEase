@@ -43,7 +43,7 @@ const ScreenMenu = () => {
         headerTitleStyle: {
           color: "#00f59b",
         },
-        statusBarColor: "#fff",
+        statusBarColor: "black",
         headerStyle: {
           backgroundColor: "black",
         },

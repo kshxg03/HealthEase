@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import moment from "moment";
@@ -73,6 +73,7 @@ const RecordDetails = () => {
 
   return (
     <View style={styles.container}>
+    <ScrollView>
       {records.map((record, index) => (
         <View key={index} style={styles.card}>
           <TouchableOpacity
@@ -112,6 +113,7 @@ const RecordDetails = () => {
           <Text style={styles.bodyText}>CBC: {record.cbc} cells/μL</Text>
         </View>
       ))}
+      </ScrollView>
     </View>
   );
 };
