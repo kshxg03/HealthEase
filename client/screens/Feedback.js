@@ -12,7 +12,7 @@ import {
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native"; 
 
-const Feedback = () => {
+const Feedback = () => {A
   const [feedback, setFeedback] = useState("");
   const navigation = useNavigation(); 
 

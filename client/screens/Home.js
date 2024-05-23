@@ -60,6 +60,10 @@ const Home = () => {
     navigation.navigate("RecordDetails");
   };
 
+  const goToAnalytics = () => {
+    navigation.navigate("Analytics");
+  };
+
   const Card = ({ iconName, buttonText, onPress }) => {
     return (
       <TouchableOpacity
@@ -136,11 +140,19 @@ const Home = () => {
             onPress={goToBMIPage}
           />
         </View>
+
+        <View style={styles.cardRow}>
         <Card
             iconName="gamepad-variant"
             buttonText="Memory Game"
             onPress={goToChooseLevel}
           />
+          <Card
+            iconName="gamepad-variant"
+            buttonText="Analytics"
+            onPress={goToAnalytics}
+          />
+          </View>
       </ScrollView>
 
       <FooterMenu />

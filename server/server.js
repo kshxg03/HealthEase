@@ -24,10 +24,20 @@ app.use(morgan('dev'))
 
 //routes
 app.use("/api/v1/auth", require("./routes/userRoutes"));
+
+
 app.use("/api/v1/medical", require("./routes/diagnosticRoutes"));
+
+
 app.use("/api/v1/medication", require("./routes/medicationRoutes"));
+
+
 app.use("/api/v1/reminder", require("./routes/reminderRoutes"));
+
+
 app.use("/api/v1/feedback", require("./routes/feedbackRoute"));
+
+
 app.use("/api/v1/record", require("./routes/healthRecordRoutes"));
 
 

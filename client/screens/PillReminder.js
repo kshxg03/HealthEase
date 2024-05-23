@@ -98,10 +98,9 @@ const PillReminder = () => {
       });
       console.log("Reminder added successfully:", response.data);
       alert("Reminder added successfully!");
-      // Clear the TextInput fields
       setPillName("");
       setReminderTime("");
-      fetchReminders(); // Fetch and schedule notifications for all reminders including the newly added one
+      fetchReminders(); 
     } catch (error) {
       console.error("Error adding reminder:", error);
       alert("Failed to add reminder.");

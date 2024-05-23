@@ -27,6 +27,7 @@ import Level10 from "../../screens/game/Level10";
 import Feedback from "../../screens/Feedback";
 import PillReminder from "../../screens/PillReminder";
 import RecordDetails from "../../screens/RecordDetails";
+import Analytics from "../../screens/Analytics";
 
 const ScreenMenu = () => {
   //global state
@@ -267,6 +268,15 @@ const ScreenMenu = () => {
               headerBackVisible: true,
               headerBackTitleVisible: false,
               headerTitle: "Health Reports",
+            }}
+          />
+          <Stack.Screen
+            name="Analytics"
+            component={Analytics}
+            options={{
+              headerBackVisible: true,
+              headerBackTitleVisible: false,
+              headerTitle: "Analytics",
             }}
           />
         </>

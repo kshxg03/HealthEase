@@ -14,10 +14,9 @@ const Level1 = () => {
   }, []);
 
   const initializeGame = () => {
-    // Reduced symbols array to 4 unique symbols for a total of 8 cards
     const symbols = ['🍎', '🍌'];
-    const allCards = symbols.concat(symbols); // Duplicates the array to create pairs
-    const shuffledCards = shuffleArray(allCards); // Shuffles the pairs
+    const allCards = symbols.concat(symbols); 
+    const shuffledCards = shuffleArray(allCards); 
     setCards(shuffledCards);
     setMatchedCards([]);
     setSelectedCards([]);

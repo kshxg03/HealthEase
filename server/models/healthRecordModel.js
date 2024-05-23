@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Define a schema for health records
 const healthRecordSchema = new mongoose.Schema({
     name: String,
     age: Number,
