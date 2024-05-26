@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 5,
     maxHeight: 200,
-    width: "80%", // Adjust width as needed
+    width: "80%", 
   },
   scrollView: {
     maxHeight: 150,

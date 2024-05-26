@@ -12,7 +12,6 @@ import FooterMenu from "../components/Menus/FooterMenu";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const avatar = require("../assets/Avatar6.png");
 
 const Profile = ({ navigation }) => {
   // Global state
@@ -47,7 +46,7 @@ const Profile = ({ navigation }) => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.avatarContainer}>
-          <Image source={avatar} style={styles.avatar} />
+          <Image source={require('../assets/Avatar6.png')} style={styles.avatar} />
         </View>
         <UserDetailCard label="First Name" value={firstname} />
         <UserDetailCard label="Last Name" value={lastname} />

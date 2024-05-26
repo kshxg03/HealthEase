@@ -148,7 +148,7 @@ const Home = () => {
             onPress={goToChooseLevel}
           />
           <Card
-            iconName="gamepad-variant"
+            iconName="google-analytics"
             buttonText="Analytics"
             onPress={goToAnalytics}
           />

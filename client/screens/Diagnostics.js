@@ -54,6 +54,12 @@ const MedicalRecordsApp = () => {
       return;
     }
 
+    // Check if the length of the value is more than 3 digits
+    if (newRecordValue.trim().length > 3) {
+      Alert.alert("Alert", "Please enter a three-digit number.");
+      return;
+    }
+
     try {
       const response = await axios.post("/medical/add-diagnostic", {
         type: newRecordType,
@@ -167,7 +173,7 @@ const MedicalRecordsApp = () => {
               </View>
               <TouchableOpacity
                 style={styles.deleteButtonContainer}
-                onPress={() => confirmDeleteRecord(item._id)} 
+                onPress={() => confirmDeleteRecord(item._id)}
               >
                 <Text style={styles.deleteButton}>Delete</Text>
               </TouchableOpacity>
