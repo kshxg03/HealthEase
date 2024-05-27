@@ -129,13 +129,21 @@ const HealthRecords = () => {
         <TextInput
           value={name}
           placeholder="Name"
+          keyboardAppearance="dark"
           placeholderTextColor={"gray"}
           style={styles.textInput}
-          onChangeText={(value) => setName(value)}
+          onChangeText={(value) => {
+            if (/^[a-zA-Z\s]*$/.test(value) || value === "") {
+              setName(value);
+            }
+          }}
         />
         <TextInput
+          maxLength={3}
           value={age}
           placeholder="Age"
+          keyboardType="numeric"
+          keyboardAppearance="dark"
           placeholderTextColor={"gray"}
           style={styles.textInput}
           onChangeText={(value) => setAge(value)}
@@ -143,62 +151,91 @@ const HealthRecords = () => {
         <TextInput
           value={gender}
           placeholder="Gender"
+          keyboardAppearance="dark"
           placeholderTextColor={"gray"}
           style={styles.textInput}
-          onChangeText={(value) => setGender(value)}
+          onChangeText={(value) => {
+            if (/^[a-zA-Z\s]*$/.test(value) || value === "") {
+              setGender(value);
+            }
+          }}
         />
         <TextInput
+          maxLength={3}
           value={bloodPressure}
           placeholder="Blood Pressure"
+          keyboardType="numeric"
+          keyboardAppearance="dark"
           placeholderTextColor={"gray"}
           style={styles.textInput}
           onChangeText={(value) => setBloodPressure(value)}
         />
         <TextInput
+          maxLength={3}
           value={uricAcid}
           placeholder="Uric Acid"
+          keyboardType="numeric"
+          keyboardAppearance="dark"
           placeholderTextColor={"gray"}
           style={styles.textInput}
           onChangeText={(value) => setUricAcid(value)}
         />
         <TextInput
+          maxLength={3}
           value={vitaminD}
           placeholder="Vitamin D"
+          keyboardType="numeric"
+          keyboardAppearance="dark"
           placeholderTextColor={"gray"}
           style={styles.textInput}
           onChangeText={(value) => setVitaminD(value)}
         />
         <TextInput
+          maxLength={3}
           value={magnesium}
           placeholder="Magnesium"
+          keyboardType="numeric"
+          keyboardAppearance="dark"
           placeholderTextColor={"gray"}
           style={styles.textInput}
           onChangeText={(value) => setMagnesium(value)}
         />
         <TextInput
+          maxLength={3}
           value={vitaminB12}
           placeholder="Vitamin B12"
+          keyboardType="numeric"
+          keyboardAppearance="dark"
           placeholderTextColor={"gray"}
           style={styles.textInput}
           onChangeText={(value) => setVitaminB12(value)}
         />
         <TextInput
+          maxLength={3}
           value={fastingBloodGlucose}
           placeholder="Fasting Blood Glucose"
+          keyboardType="numeric"
+          keyboardAppearance="dark"
           placeholderTextColor={"gray"}
           style={styles.textInput}
           onChangeText={(value) => setFastingBloodGlucose(value)}
         />
         <TextInput
+          maxLength={3}
           value={lipidProfile}
           placeholder="Lipid Profile"
+          keyboardType="numeric"
+          keyboardAppearance="dark"
           placeholderTextColor={"gray"}
           style={styles.textInput}
           onChangeText={(value) => setLipidProfile(value)}
         />
         <TextInput
+          maxLength={3}
           value={cbc}
           placeholder="CBC"
+          keyboardType="numeric"
+          keyboardAppearance="dark"
           placeholderTextColor={"gray"}
           style={styles.textInput}
           onChangeText={(value) => setCbc(value)}

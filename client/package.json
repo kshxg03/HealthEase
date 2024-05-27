@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.23.1",
-    "@react-native-picker/picker": "^2.7.6",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.12",
     "@react-navigation/native-stack": "^6.9.20",
@@ -19,26 +18,20 @@
     "deprecated-react-native-prop-types": "^5.0.0",
     "expo": "^51.0.8",
     "expo-av": "^14.0.5",
-    "expo-document-picker": "^11.10.1",
-    "expo-image-picker": "^14.7.1",
-    "expo-notifications": "^0.27.7",
+    "expo-notifications": "^0.28.3",
     "expo-permissions": "^14.4.0",
-    "expo-print": "^12.8.1",
-    "expo-sharing": "^11.10.0",
+    "expo-sharing": "^12.0.1",
     "expo-status-bar": "~1.11.1",
     "firebase": "^10.11.0",
     "moment": "^2.30.1",
     "patch-package": "^8.0.0",
     "react": "18.2.0",
-    "react-native": "^0.73.6",
-    "react-native-chart-kit": "^6.12.0",
+    "react-native": "^0.74.1",
     "react-native-gifted-charts": "^1.4.10",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-pdf": "^6.7.5",
-    "react-native-push-notification": "^8.1.1",
-    "react-native-svg": "^15.3.0",
     "react-native-vector-icons": "^10.1.0",
-    "react-native-webview": "^13.6.4"
+    "react-native-webview": "^13.8.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

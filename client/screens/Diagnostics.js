@@ -54,12 +54,6 @@ const MedicalRecordsApp = () => {
       return;
     }
 
-    // Check if the length of the value is more than 3 digits
-    if (newRecordValue.trim().length > 3) {
-      Alert.alert("Alert", "Please enter a three-digit number.");
-      return;
-    }
-
     try {
       const response = await axios.post("/medical/add-diagnostic", {
         type: newRecordType,
@@ -138,6 +132,7 @@ const MedicalRecordsApp = () => {
               onSelect={handlePickerChange}
             />
             <TextInput
+              maxLength={3}
               style={styles.input}
               placeholder="New Record Value"
               placeholderTextColor="gray"
