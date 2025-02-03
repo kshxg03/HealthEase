@@ -1,0 +1,1 @@
+Final year project, where users can store there health data, participate in guided meditation sessions, stay informed with latest health news, record their medication data and remind them for daily intake, and so on.
